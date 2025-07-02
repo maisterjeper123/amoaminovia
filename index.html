@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para ti, mi amor</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      color: #fff;
+      background: #111;
+      position: relative;
+      height: 100%;
+      min-height: 100vh;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    main {
+      text-align: center;
+      padding: 3rem 1rem 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      color: #ffccff;
+      text-shadow: 0 0 10px #ff00cc;
+    }
+    .btn {
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 1rem 2rem;
+      border: 2px solid #fff;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      margin: 1rem auto;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: fit-content;
+      user-select: none;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    .section {
+      display: none;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 1.5rem;
+      margin: 2rem auto;
+      border-radius: 15px;
+      max-width: 700px;
+      animation: fadeIn 1s ease forwards;
+      box-shadow: 0 0 10px #ff66ccaa;
+      text-align: left;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    iframe {
+      border-radius: 12px;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 300px;
+      height: 380px;
+      border: none;
+      box-shadow: 0 0 10px #ff66ccaa;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h2 {
+      color: #ffb3ff;
+      text-shadow: 0 0 8px #ff66cc;
+      margin-top: 0;
+    }
+    .section p {
+      text-align: justify;
+      line-height: 1.5;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="stars"></canvas>
+
+  <main>
+    <h1>Para ti, mi princesa y futura esposa</h1>
+
+    <button class="btn" onclick="toggleSection('mensaje')">📝 Mensaje especial bro </button>
+    <button class="btn" onclick="toggleSection('poema')">💌 Poema (disfruto hacerlos en especial si es para ti) </button>
+    <button class="btn" onclick="toggleSection('playlist')">🎶 Música que me hace acordar a ti 💑</button>
+
+    <div id="mensaje" class="section">
+      <h2>📝 Mi mensaje para ti</h2>
+      <p>
+        Bueno, Ashly… sé que a veces soy un desastre de persona, especialmente ahora.<br/>
+        No voy a poder estar contigo el día de tu cumpleaños, y sé que ese día vas a estar rodeada de tu familia, de tus amigos, pasándola bonito y disfrutando.<br/>
+        La verdad me hubiera encantado poder verte ese día, darte un presente que considero muy especial para ti.<br/>
+        Pero, por ahora, me toca decirte todo esto a través de esta página.<br/>
+        Otro año más de vida… y otro año más viva para mí. NYEHEYEHEYE 😈<br/>
+        En fin, solo quiero decirte que te amo demasiado. Que eres alguien demasiado especial para mí, mi niña bonita. 💖
+      </p>
+    </div>
+
+    <div id="poema" class="section">
+      <h2>💌 Poema para ti</h2>
+      <p>
+        Tus ojos son constelaciones que miro cada noche en calma,<br/>
+        noches que antes dolían… hasta que llegaste tú, mi alma.<br/>
+        Fuiste cicatriz de un desliz que no supe evitar,<br/>
+        pero también el amor que vino a sanar.<br/>
+        Tu risa es canción que calma mi guerra,<br/>
+        la única paz que encontré en esta tierra.<br/>
+        Tocaste mi alma sin pedir permiso, y<br/>
+        desde entonces todo tiene sentido.<br/>
+      </p>
+    </div>
+
+    <div id="playlist" class="section">
+      <h2>Playlist de canciones que describen mi amor por ti &lt;3</h2>
+      <iframe 
+        src="https://open.spotify.com/embed/playlist/5EZgSeZB42MYgbQxEC93ot?si=91bba013b9ae4424" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy"
+      ></iframe>
+    </div>
+  </main>
+
+  <script>
+    function toggleSection(id) {
+      const sections = ['mensaje', 'poema', 'playlist'];
+      sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if(sectionId === id) {
+          section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          speed: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    createStars(150);
+    animateStars();
+  </script>
+
+</body>
+</html>
